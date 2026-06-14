@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Community Event Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<h1>Community Event Portal</h1>
+
+<!-- REQUIRED ELEMENTS FOR JS -->
+
+<!-- DOM Manipulation target -->
+<div id="eventContainer"></div>
+
+<!-- Search box for key events -->
+<input type="text" id="search" placeholder="Search events">
+
+<!-- Form for JS Exercise 11 -->
+<form onsubmit="handleForm(event)">
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <button type="submit">Register</button>
+</form>
+
+<!-- Buttons for testing -->
+<button onclick="fetchEvents()">Fetch Events</button>
+<button onclick="submitRegistration({name:'Test', email:'test@mail.com'})">Submit API</button>
+<button onclick="debugForm()">Debug</button>
+
+<!-- JS FILE LINK -->
+<script src="main.js"></script>
+
+</body>
+</html>
