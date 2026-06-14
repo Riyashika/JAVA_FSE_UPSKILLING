@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Local Community Event Portal</title>
+
+    <!--Exercise 3: Internal CSS-->
+    <style>
+        body { font-family: Arial; margin: 20px; }
+
+        #welcomeBanner {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+
+        table, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .imgBox {
+            border: 2px solid gray;
+            width: 150px;
+        }
+
+        nav a {
+            margin-right: 15px;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== Exercise 1: Base Template ===== -->
+<!-- Navigation Section -->
+<nav>
+    <!-- ===== Exercise 2: Navigation ===== -->
+    <a href="#home">Home</a>
+    <a href="#events">Events</a>
+    <a href="#contact">Contact</a>
+    <a href="help.html" target="_blank">Help</a>
+</nav>
+
+<!-- Main Section -->
+<section id="home">
+    <h1>Community Event Portal</h1>
+
+    <!-- ===== Exercise 3: Welcome Banner ===== -->
+    <div id="welcomeBanner">
+        Welcome, User!
+        <span style="color:red; font-weight:bold;">Special Offer Today!</span>
+    </div>
+
+    <p class="highlight">Explore upcoming community events and activities.</p>
+</section>
+
+<!-- ===== Exercise 4: Image Gallery ===== -->
+<section id="events">
+    <h2>Event Gallery</h2>
+
+    <table>
+        <caption>Past Community Events</caption>
+        <tr>
+            <td><img class="imgBox" src="https://via.placeholder.com/150" alt="Event 1" title="Music Night"></td>
+            <td><img class="imgBox" src="https://via.placeholder.com/150" alt="Event 2" title="Food Festival"></td>
+            <td><img class="imgBox" src="https://via.placeholder.com/150" alt="Event 3" title="Art Show"></td>
+        </tr>
+        <tr>
+            <td><img class="imgBox" src="https://via.placeholder.com/150"></td>
+            <td><img class="imgBox" src="https://via.placeholder.com/150"></td>
+            <td><img class="imgBox" src="https://via.placeholder.com/150"></td>
+        </tr>
+    </table>
+</section>
+
+<!-- ===== Exercise 5: Registration Form ===== -->
+<section>
+    <h2>Event Registration</h2>
+
+    <form onsubmit="return showConfirmation()">
+        <input type="text" id="name" placeholder="Enter Name" required autofocus><br><br>
+
+        <input type="email" id="email" placeholder="Enter Email" required><br><br>
+
+        <input type="date" id="date" required><br><br>
+
+        <select id="eventType" onchange="savePreference()">
+            <option>Music</option>
+            <option>Food</option>
+            <option>Art</option>
+        </select><br><br>
+
+        <textarea id="msg" placeholder="Message"></textarea><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <output id="outputMsg"></output>
+</section>
+
+<!-- ===== Exercise 6: Events Handling ===== -->
+<section id="contact">
+    <h2>Feedback</h2>
+
+    <input type="text" id="phone" placeholder="Phone Number" onblur="validatePhone()">
+    <div id="phoneError" class="error"></div>
+
+    <select onchange="showFee(this.value)">
+        <option value="0">Select Event</option>
+        <option value="100">Music</option>
+        <option value="200">Food</option>
+    </select>
+
+    <p id="fee"></p>
+
+    <img src="https://via.placeholder.com/100"
+         ondblclick="enlarge(this)">
+
+    <textarea onkeyup="countChars(this)" placeholder="Type feedback"></textarea>
+    <p id="charCount"></p>
+
+    <button onclick="showClickMsg()">Submit Feedback</button>
+</section>
+
+<!-- ===== Exercise 7: Video ===== -->
+<section>
+    <h2>Event Video</h2>
+
+    <video width="300" controls oncanplay="videoReady()">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+
+    <p id="videoMsg"></p>
+</section>
+
+<!-- ===== Exercise 8: Storage ===== -->
+<section>
+    <h2>Preferences</h2>
+
+    <button onclick="clearPrefs()">Clear Preferences</button>
+</section>
+
+<!-- ===== Exercise 9: Geolocation ===== -->
+<section>
+    <h2>Find Nearby Events</h2>
+
+    <button onclick="getLocation()">Find Nearby Events</button>
+    <p id="location"></p>
+</section>
+
+<!-- ===== Exercise 10: Debugging (Console Logs) ===== -->
+<script>
+    console.log("Page loaded successfully");
+
+    function showConfirmation() {
+        document.getElementById("outputMsg").value = "Registration Successful!";
+        return false;
+    }
+
+    function validatePhone() {
+        let phone = document.getElementById("phone").value;
+        if (phone.length < 10) {
+            document.getElementById("phoneError").innerText = "Invalid phone number";
+        } else {
+            document.getElementById("phoneError").innerText = "";
+        }
+    }
+
+    function showFee(value) {
+        document.getElementById("fee").innerText = "Fee: " + value;
+    }
+
+    function enlarge(img) {
+        img.style.width = "200px";
+    }
+
+    function countChars(textarea) {
+        document.getElementById("charCount").innerText =
+            "Characters: " + textarea.value.length;
+    }
+
+    function showClickMsg() {
+        alert("Feedback submitted!");
+    }
+
+    function videoReady() {
+        document.getElementById("videoMsg").innerText =
+            "Video ready to play";
+    }
+
+    // ===== Exercise 8: localStorage =====
+    function savePreference() {
+        let type = document.getElementById("eventType").value;
+        localStorage.setItem("eventType", type);
+    }
+
+    window.onload = function () {
+        let saved = localStorage.getItem("eventType");
+        if (saved) {
+            document.getElementById("eventType").value = saved;
+        }
+    };
+
+    function clearPrefs() {
+        localStorage.clear();
+        sessionStorage.clear();
+        alert("Preferences cleared");
+    }
+
+    // ===== Exercise 9: Geolocation =====
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function (pos) {
+                    document.getElementById("location").innerText =
+                        "Lat: " + pos.coords.latitude +
+                        " Lon: " + pos.coords.longitude;
+                },
+                function () {
+                    alert("Permission denied or error");
+                },
+                { enableHighAccuracy: true, timeout: 5000 }
+            );
+        }
+    }
+</script>
+
+</body>
+</html>
